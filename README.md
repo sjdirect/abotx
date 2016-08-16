@@ -1,5 +1,13 @@
+*Please star this project!!* Contact me with exciting opportunities!!
 
-This will be the home of executable examples of [AbotX](https://abotx.org). You may post any issues here as well.
+# AbotX #
+
+A powerful C# web crawler that makes advanced crawling features easy to use. AbotX builds upon the open source Abot C# Web Crawler by providing a powerful set of wrappers and extensions.
+
+*Please star this project!!*
+
+* Install AbotX using [Nuget](https://www.nuget.org/packages/AbotX/)
+* Go to the [AbotX website](https://abotx.org) for more information and tutorials
 
 #### Release Notes ####
   * [v1.2.1](https://www.nuget.org/packages/AbotX/1.2.1) released 2016-08-16
