@@ -8,6 +8,8 @@ A powerful C# web crawler that makes advanced crawling features easy to use. Abo
 * Go to the [AbotX website](https://abotx.org) for more information and tutorials
 
 ### Release Notes ###
+  * [v1.2.45](https://www.nuget.org/packages/AbotX/1.2.45) released 2016-08-24
+    * [Issue #10](https://github.com/sjdirect/abotx/issues/10) Access to the registry key 'Global' is denied
   * [v1.2.44](https://www.nuget.org/packages/AbotX/1.2.44) released 2016-08-18
     * [Issue #9](https://github.com/sjdirect/abotx/issues/9) Partial fix 3/3 (more null references with new constructors
   * [v1.2.42](https://www.nuget.org/packages/AbotX/1.2.42) released 2016-08-17
