@@ -9,7 +9,7 @@ A powerful C# web crawler that makes advanced crawling features easy to use. Abo
 
 ### Release Notes ###
   * [v1.2.48](https://www.nuget.org/packages/AbotX/1.2.48) released 2016-09-18
-    * [Issue #10](https://github.com/sjdirect/abotx/issues/11) The DateTime represented by the string is out of range
+    * [Issue #11](https://github.com/sjdirect/abotx/issues/11) The DateTime represented by the string is out of range
   * [v1.2.46](https://www.nuget.org/packages/AbotX/1.2.46) released 2016-08-25
     * [Issue #10](https://github.com/sjdirect/abotx/issues/10) Access to the registry key 'Global' is denied
   * [v1.2.44](https://www.nuget.org/packages/AbotX/1.2.44) released 2016-08-18
