@@ -8,6 +8,10 @@ A powerful C# web crawler that makes advanced crawling features easy to use. Abo
 * Go to the [AbotX website](https://abotx.org) for more information and tutorials
 
 ### Release Notes ###
+  * [v1.2.120](https://www.nuget.org/packages/AbotX/1.2.120) released 2017-01-08
+    * Removal of Automapper dependency
+    * Upgraded depdendent lib versions to latest
+    * Minor bug fixes
   * [v1.2.71](https://www.nuget.org/packages/AbotX/1.2.71) released 2017-01-04
     * Javascript rendering stability improvement
   * [v1.2.48](https://www.nuget.org/packages/AbotX/1.2.48) released 2016-09-18
