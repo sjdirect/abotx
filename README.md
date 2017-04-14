@@ -1,4 +1,4 @@
-# AbotX #
+# AbotX [![NuGet](https://img.shields.io/nuget/v/Abotx.svg)](https://www.nuget.org/packages/Abotx/)
 
 A powerful C# web crawler that makes advanced crawling features easy to use. AbotX builds upon the open source Abot C# Web Crawler by providing a powerful set of wrappers and extensions.
 
