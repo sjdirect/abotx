@@ -8,6 +8,8 @@ A powerful C# web crawler that makes advanced crawling features easy to use. Abo
 * Go to the [AbotX website](https://abotx.org) for more information and tutorials
 
 ### Release Notes ###
+  * [v1.2.125](https://www.nuget.org/packages/AbotX/1.2.125) released 2017-07-01
+    * Fixed issue with null reference if ImplementationContainer was passed in, [More details here](https://github.com/sjdirect/abotx/issues/14
   * [v1.2.124](https://www.nuget.org/packages/AbotX/1.2.124) released 2017-04-03
     * Updated Abot dependency to the latest version
   * [v1.2.123](https://www.nuget.org/packages/AbotX/1.2.123) released 2017-02-12
