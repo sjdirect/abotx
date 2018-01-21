@@ -9,7 +9,7 @@ A powerful C# web crawler that makes advanced crawling features easy to use. Abo
 
 ### Release Notes ###
   * [v1.3.53](https://www.nuget.org/packages/AbotX/1.3.53) released 2017-07-16
-    * Removal of classes/methods marked obsolete
+    * Removal of classes/methods marked obsolete (CSQuery support, extra constructor params, etc..)
     * Removal of dependence on Commoner.Core in several areas
     * Update of AbotX.Agent to use a much newer version of unity
     * Update of AbotX.Agent to use a more robust IOC injection configuration schema that allows config based injection of all impls (Abotx and Abot)
