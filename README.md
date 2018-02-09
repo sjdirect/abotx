@@ -8,6 +8,8 @@ A powerful C# web crawler that makes advanced crawling features easy to use. Abo
 * Go to the [AbotX website](https://abotx.org) for more information and tutorials
 
 ### Release Notes ###
+  * [v1.3.73](https://www.nuget.org/packages/AbotX/1.3.73) released 2018-02-08
+    * Added property SiteToCrawl.CrawlConfiguration to allow easy per crawl configuration. WebCrawlerFactory will use this property if present
   * [v1.3.63](https://www.nuget.org/packages/AbotX/1.3.63) released 2018-02-02
     * Fixed issue with Phantomjs user agent, [More details here](https://github.com/sjdirect/abotx/issues/16)
   * [v1.3.53](https://www.nuget.org/packages/AbotX/1.3.53) released 2018-01-20
