@@ -1,0 +1,15 @@
+<License>
+  <LicenseAttributes>
+    <Attribute name="ProductName">AbotXv1</Attribute>
+    <Attribute name="License">Ultimate</Attribute>
+  </LicenseAttributes>
+  <Id>eef8fb8d-38ce-40aa-b89c-996bf8a22ee2</Id>
+  <ProductFeatures />
+  <Customer>
+    <Name>Self</Name>
+    <Email>sjdirect@gmail.com</Email>
+  </Customer>
+  <Type>Trial</Type>
+  <Expiration>Thu, 03 Oct 2019 21:31:01 GMT</Expiration>
+  <Signature>MEQCIDX6OuTCPnVZpfDDkZ0kkmzWoHfiqJzhBEgxoGIcR4dQAiB1fCW/CSwlRWLnE/ytfq2jhWV/GkhmBSaqp5+dWWjpMA==</Signature>
+</License>
