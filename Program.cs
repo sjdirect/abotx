@@ -12,17 +12,18 @@ namespace abotx_usage
         static void Main(string[] args)
         {
             log4net.Config.XmlConfigurator.Configure();
-            var config = new CrawlConfigurationX
+            var configurationX = new CrawlConfigurationX
             {
                 IsJavascriptRenderingEnabled = true,
                 JavascriptRenderingWaitTimeInMilliseconds = 3000,
                 MaxPagesToCrawl = 1, 
                 MaxConcurrentThreads = 1       
             };
-            var crawler = new CrawlerX(config);
-            crawler.PageCrawlCompleted += Crawler_PageCrawlCompleted;
+            
+            var crawlerx = new CrawlerX(configurationX);
+            crawlerx.PageCrawlCompleted += Crawler_PageCrawlCompleted;
 
-            var result = crawler.CrawlAsync(new Uri("https://www.google.com/search?q=dogs")).Result;
+            var result = crawlerx.CrawlAsync(new Uri("https://www.google.com/search?q=dogs")).Result;
 
             Console.ReadLine();
         }
