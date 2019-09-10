@@ -109,3 +109,4 @@ UpgradeLog*.XML
 Settings.StyleCop
 .vs/config/applicationhost.config
 /.vs/abotx-usage/v16/Server/sqlite3
+/.idea/*
