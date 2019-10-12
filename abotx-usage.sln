@@ -3,7 +3,17 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.29215.179
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "abotx-usage", "abotx-usage.csproj", "{7503605F-3B9E-463E-A5DB-2C8622973CB7}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AbotX.Demo.Dotnet.Framework.4", "AbotX.Demo.Dotnet.Framework.4\AbotX.Demo.Dotnet.Framework.4.csproj", "{BE3E538A-0E5B-4CDA-85B0-588CF4F735DE}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AbotX.Demo.Dotnet.Framework.461", "AbotX.Demo.Dotnet.Framework.461\AbotX.Demo.Dotnet.Framework.461.csproj", "{580E640D-410D-490E-A79D-96DA3E4FBED8}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AbotX.Demo.Dotnet.Framework.472", "..\AbotX.Demo.Dotnet.Framework.472\AbotX.Demo.Dotnet.Framework.472.csproj", "{3EBA222F-126B-4C4B-BFB5-2AA5FA58BCD2}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AbotX.Demo.Dotnet.Core.1", "AbotX.Demo.Dotnet.Core.1\AbotX.Demo.Dotnet.Core.1.csproj", "{47111AC2-57A3-4B5E-9EF9-DE7C40376146}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AbotX.Demo.Dotnet.Core.2", "AbotX.Demo.Dotnet.Core.2\AbotX.Demo.Dotnet.Core.2.csproj", "{4636CF2E-EE44-47C1-B18F-B5D8C83EFFEE}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AbotX.Demo.Dotnet.Core.3", "AbotX.Demo.Dotnet.Core.3\AbotX.Demo.Dotnet.Core.3.csproj", "{70668E24-444C-48CE-AB82-C144AF3CEFC0}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -11,10 +21,30 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{7503605F-3B9E-463E-A5DB-2C8622973CB7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{7503605F-3B9E-463E-A5DB-2C8622973CB7}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{7503605F-3B9E-463E-A5DB-2C8622973CB7}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{7503605F-3B9E-463E-A5DB-2C8622973CB7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BE3E538A-0E5B-4CDA-85B0-588CF4F735DE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BE3E538A-0E5B-4CDA-85B0-588CF4F735DE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BE3E538A-0E5B-4CDA-85B0-588CF4F735DE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BE3E538A-0E5B-4CDA-85B0-588CF4F735DE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{580E640D-410D-490E-A79D-96DA3E4FBED8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{580E640D-410D-490E-A79D-96DA3E4FBED8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{580E640D-410D-490E-A79D-96DA3E4FBED8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{580E640D-410D-490E-A79D-96DA3E4FBED8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3EBA222F-126B-4C4B-BFB5-2AA5FA58BCD2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3EBA222F-126B-4C4B-BFB5-2AA5FA58BCD2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3EBA222F-126B-4C4B-BFB5-2AA5FA58BCD2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3EBA222F-126B-4C4B-BFB5-2AA5FA58BCD2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{47111AC2-57A3-4B5E-9EF9-DE7C40376146}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{47111AC2-57A3-4B5E-9EF9-DE7C40376146}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{47111AC2-57A3-4B5E-9EF9-DE7C40376146}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{47111AC2-57A3-4B5E-9EF9-DE7C40376146}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4636CF2E-EE44-47C1-B18F-B5D8C83EFFEE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4636CF2E-EE44-47C1-B18F-B5D8C83EFFEE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4636CF2E-EE44-47C1-B18F-B5D8C83EFFEE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4636CF2E-EE44-47C1-B18F-B5D8C83EFFEE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{70668E24-444C-48CE-AB82-C144AF3CEFC0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{70668E24-444C-48CE-AB82-C144AF3CEFC0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{70668E24-444C-48CE-AB82-C144AF3CEFC0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{70668E24-444C-48CE-AB82-C144AF3CEFC0}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
