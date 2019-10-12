@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace AbotX.Demo.Framework._472
+namespace AbotX.Demo.Dotnet.Framework._472
 {
     public class Class1
     {

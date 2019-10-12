@@ -4,11 +4,11 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{C8D57E98-8B52-48F4-9166-2FB4F1B0B936}</ProjectGuid>
+    <ProjectGuid>{459985F7-DB61-4BEA-A452-112267B7A1F8}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>AbotX.Demo.Framework._472</RootNamespace>
-    <AssemblyName>AbotX.Demo.Framework.472</AssemblyName>
+    <RootNamespace>AbotX.Demo.Dotnet.Framework._472</RootNamespace>
+    <AssemblyName>AbotX.Demo.Dotnet.Framework.472</AssemblyName>
     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <Deterministic>true</Deterministic>

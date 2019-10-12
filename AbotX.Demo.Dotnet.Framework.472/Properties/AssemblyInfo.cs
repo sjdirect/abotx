@@ -5,11 +5,11 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("AbotX.Demo.Framework.472")]
+[assembly: AssemblyTitle("AbotX.Demo.Dotnet.Framework.472")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("AbotX.Demo.Framework.472")]
+[assembly: AssemblyProduct("AbotX.Demo.Dotnet.Framework.472")]
 [assembly: AssemblyCopyright("Copyright ©  2019")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
@@ -20,7 +20,7 @@ using System.Runtime.InteropServices;
 [assembly: ComVisible(false)]
 
 // The following GUID is for the ID of the typelib if this project is exposed to COM
-[assembly: Guid("c8d57e98-8b52-48f4-9166-2fb4f1b0b936")]
+[assembly: Guid("459985f7-db61-4bea-a452-112267b7a1f8")]
 
 // Version information for an assembly consists of the following four values:
 //
