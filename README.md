@@ -2,7 +2,7 @@
 
 *Please star this project!!*
 
-A powerful C# web crawler that makes advanced crawling features easy to use. AbotX builds upon the [open source Abot C# Web Crawler](https://github.com/sjdirect/abot/blob/master/README.md) by providing a powerful set of wrappers and extensions. 
+A powerful C# web crawler that makes advanced crawling features easy to use. AbotX builds upon [Abot C# Web Crawler Framework](https://github.com/sjdirect/abot/blob/master/README.md) by providing a powerful set of wrappers and extensions. 
 
 ## Features
 * Crawl multiple sites concurrently (ParallelCrawlerEngine)
@@ -27,7 +27,7 @@ PM> Install-Package AbotX
 
 ## Quick Start 
 
-AbotX adds advanced functionality, shortcuts and configurations to the rock solid [Abot C# Web Crawler](https://github.com/sjdirect/abot/blob/master/README.md). It is recommended that you start with Abot's documentation and quick start before coming here. 
+AbotX adds advanced functionality, shortcuts and configurations to the rock solid [Abot C# Web Crawler](https://github.com/sjdirect/abot/blob/master/README.md). It is recommended that you start with Abot's documentation and quick start before coming here.  
 
 AbotX consists of the two main entry points. They are CrawlerX and ParallelCrawlerEngine. CrawlerX is a single crawler instance (child of Abot's PoliteWebCrawler class) while ParallelCrawlerEngine creates and manages multiple instances of CrawlerX. If you want to just crawl a single site then CrawlerX is where you want to start. If you want to crawl a configurable number of sites concurrently within the same process then the ParallelCrawlerEngine is what you are after. 
 
