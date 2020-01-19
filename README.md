@@ -488,7 +488,7 @@ See the "Configure Speed Up And Slow Down" section for more details on how to co
 
 
 ## Configure Speed Up And Slow Down
-Multiple features trigger AbotX to speed up or to slow down crawling. The Accelerator and Decelerator are two indipendently configurable components that determine exactly how agressively AbotX reacts to a situation that triggers a SpeedUp or SlowDown. The default works fine for most cases but the following are options you have to take further control.
+Multiple features trigger AbotX to speed up or to slow down crawling. The Accelerator and Decelerator are two independently configurable components that determine exactly how agressively AbotX reacts to a situation that triggers a SpeedUp or SlowDown. The default works fine for most cases but the following are options you have to take further control.
 
 #### Accelerator
 
