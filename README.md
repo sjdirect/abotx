@@ -3,12 +3,12 @@
 A powerful C# web crawler that makes advanced crawling features easy to use. AbotX builds upon the [open source Abot C# Web Crawler](https://github.com/sjdirect/abot) by providing a powerful set of wrappers and extensions. 
 
 ## Features
-* Crawl multiple sites concurrently
-* Pause/resume live crawls
-* Render javascript before processing
-* Simplified pluggability/extensibility
-* Avoid getting blocked by sites
-* Automatically tune speed/concurrency
+* Crawl multiple sites concurrently (ParallelCrawlerEngine)
+* Pause/resume live crawls (CrawlerX & ParallelCrawlerEngine)
+* Render javascript before processing (CrawlerX & ParallelCrawlerEngine)
+* Simplified pluggability/extensibility (CrawlerX & ParallelCrawlerEngine)
+* Avoid getting blocked by sites (AutoThrottling)
+* Automatically tune speed/concurrency (AutoTuning)
 
 AbotX has both free and paid features. See licensing info at the bottom of this page for more information.
 
