@@ -51,14 +51,14 @@ namespace AbotX2.Demo
             var siteToCrawl = new Uri("YourSiteHere");
 
             //Uncomment to demo major features
-            //await DemoPauseResumeStop(siteToCrawl);
-            //await DemoJavascriptRendering(siteToCrawl);
-            //await DemoParallelCrawlerEngine(siteToCrawl);
-            //await DemoAutoTuning(siteToCrawl);
-            //await DemoThrottling(siteToCrawl);
+            //await DemoCrawlerX_PauseResumeStop(siteToCrawl);
+            //await DemoCrawlerX_JavascriptRendering(siteToCrawl);
+            //await DemoCrawlerX_AutoTuning(siteToCrawl);
+            //await DemoCrawlerX_Throttling(siteToCrawl);
+            //await DemoParallelCrawlerEngine();
         }
 
-        public static async Task DemoPauseResumeStop(Uri siteToCrawl)
+        private static async Task DemoCrawlerX_PauseResumeStop(Uri siteToCrawl)
         {
             using (var crawler = new CrawlerX(GetSafeConfig()))
             {
@@ -80,7 +80,7 @@ namespace AbotX2.Demo
             }
         }
 
-        public static async Task DemoJavascriptRendering(Uri siteToCrawl)
+        private static async Task DemoCrawlerX_JavascriptRendering(Uri siteToCrawl)
         {
             var pathToPhantomJSExeFolder = @"[YourNugetPackagesLocationAbsolutePath]\PhantomJS.2.1.1\tools\phantomjs]";
             var config = new CrawlConfigurationX
@@ -105,7 +105,59 @@ namespace AbotX2.Demo
             }
         }
 
-        private static async Task DemoParallelCrawlerEngine(Uri siteToCrawl)
+        private static async Task DemoCrawlerX_AutoTuning(Uri siteToCrawl)
+        {
+            var config = GetSafeConfig();
+            config.AutoTuning = new AutoTuningConfig
+            {
+                IsEnabled = true,
+                CpuThresholdHigh = 85,
+                CpuThresholdMed = 65,
+                MinAdjustmentWaitTimeInSecs = 10
+            };
+            //Optional, configure how aggressively to speed up or down during throttling
+            config.Accelerator = new AcceleratorConfig();
+            config.Decelerator = new DeceleratorConfig();
+
+            //Now the crawl is able to "AutoTune" itself if the host machine
+            //is showing signs of stress.
+            using (var crawler = new CrawlerX(config))
+            {
+                crawler.PageCrawlCompleted += (sender, args) =>
+                {
+                    //Check out args.CrawledPage for any info you need
+                };
+                await crawler.CrawlAsync(siteToCrawl);
+            }
+        }
+
+        private static async Task DemoCrawlerX_Throttling(Uri siteToCrawl)
+        {
+            var config = GetSafeConfig();
+            config.AutoThrottling = new AutoThrottlingConfig
+            {
+                IsEnabled = true,
+                ThresholdHigh = 2,
+                ThresholdMed = 2,
+                MinAdjustmentWaitTimeInSecs = 10
+            };
+            //Optional, configure how aggressively to speed up or down during throttling
+            config.Accelerator = new AcceleratorConfig();
+            config.Decelerator = new DeceleratorConfig();
+
+            //Now the crawl is able to "Throttle" itself if the site being crawled
+            //is showing signs of stress.
+            using (var crawler = new CrawlerX(config))
+            {
+                crawler.PageCrawlCompleted += (sender, args) =>
+                {
+                    //Check out args.CrawledPage for any info you need
+                };
+                await crawler.CrawlAsync(siteToCrawl);
+            }
+        }
+
+        private static async Task DemoParallelCrawlerEngine()
         {
             var siteToCrawlProvider = new SiteToCrawlProvider();
             siteToCrawlProvider.AddSitesToCrawl(new List<SiteToCrawl>
@@ -155,63 +207,11 @@ namespace AbotX2.Demo
             await crawlEngine.StartAsync();
         }
 
-        public static async Task DemoAutoTuning(Uri siteToCrawl)
-        {
-            var config = GetSafeConfig();
-            config.AutoTuning = new AutoTuningConfig
-            {
-                IsEnabled = true,
-                CpuThresholdHigh = 85,
-                CpuThresholdMed = 65,
-                MinAdjustmentWaitTimeInSecs = 10
-            };
-            //Optional, configure how aggressively to speed up or down during throttling
-            config.Accelerator = new AcceleratorConfig();
-            config.Decelerator = new DeceleratorConfig();
-
-            //Now the crawl is able to "AutoTune" itself if the host machine
-            //is showing signs of stress.
-            using (var crawler = new CrawlerX(config))
-            {
-                crawler.PageCrawlCompleted += (sender, args) =>
-                {
-                    //Check out args.CrawledPage for any info you need
-                };
-                await crawler.CrawlAsync(siteToCrawl);
-            }
-        }
-
-        public static async Task DemoThrottling(Uri siteToCrawl)
-        {
-            var config = GetSafeConfig();
-            config.AutoThrottling = new AutoThrottlingConfig
-            {
-                IsEnabled = true,
-                ThresholdHigh = 2,
-                ThresholdMed = 2,
-                MinAdjustmentWaitTimeInSecs = 10
-            };
-            //Optional, configure how aggressively to speed up or down during throttling
-            config.Accelerator = new AcceleratorConfig();
-            config.Decelerator = new DeceleratorConfig();
-
-            //Now the crawl is able to "Throttle" itself if the site being crawled
-            //is showing signs of stress.
-            using (var crawler = new CrawlerX(config))
-            {
-                crawler.PageCrawlCompleted += (sender, args) =>
-                {
-                    //Check out args.CrawledPage for any info you need
-                };
-                await crawler.CrawlAsync(siteToCrawl);
-            }
-        }
-
         private static CrawlConfigurationX GetSafeConfig()
         {
             /*The following settings will help not get your ip banned
              by the sites you are trying to crawl. The idea is to crawl
-             only 10 pages and wait 2 seconds between http requests
+             only 5 pages and wait 2 seconds between http requests
              */
             return new CrawlConfigurationX
             {
@@ -221,6 +221,7 @@ namespace AbotX2.Demo
         }
     }
 }
+
 ```
 
 <br /><br /><br />
