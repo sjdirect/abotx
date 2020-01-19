@@ -2,7 +2,7 @@
 
 A powerful C# web crawler that makes advanced crawling features easy to use. AbotX builds upon the [open source Abot C# Web Crawler](https://github.com/sjdirect/abot) by providing a powerful set of wrappers and extensions. 
 
-##### Features
+## Features
 * Crawl multiple sites concurrently
 * Pause/resume live crawls
 * Render javascript before processing
@@ -12,7 +12,7 @@ A powerful C# web crawler that makes advanced crawling features easy to use. Abo
 
 AbotX has both free and paid features. See licensing info at the bottom of this page for more information.
 
-##### Technical Details
+## Technical Details
 * Version 2.x targets .NET Standard 2.0 (compatible with .NET framework 4.6.1+ or .NET Core 2+)
 * Version 1.x targets .NET Framework 4.0 (support ends soon, please upgrade)
 
@@ -29,7 +29,7 @@ AbotX adds advanced functionality, shortcuts and configurations to the rock soli
 
 AbotX consists of the two main entry points. They are CrawlerX and ParallelCrawlerEngine. CrawlerX is a single crawler instance (child of Abot's PoliteWebCrawler class) while ParallelCrawlerEngine creates and manages multiple instances of CrawlerX. If you want to just crawl a single site then CrawlerX is where you want to start. If you want to crawl a configurable number of sites concurrently within the same process then the ParallelCrawlerEngine is what you are after. 
 
-#### Using AbotX
+### Using AbotX
 ```c#
 using System;
 using System.Collections.Generic;
@@ -345,7 +345,7 @@ crawler.SpeedUp();
 System.Threading.Thread.Sleep(3000);
 crawler.SpeedUp();
 ```
-See the "Configure Speed Up And Slow Down" section for more details on what happens when SpeedUp() is called.
+See the "Configure Speed Up And Slow Down" section for more details on how to control exactly what happens when SpeedUp() is called.
 
 ### Slow Down
 
@@ -360,9 +360,135 @@ crawler.SlowDown();
 System.Threading.Thread.Sleep(3000);
 crawler.SlowDown();
 ```
+See the "Configure Speed Up And Slow Down" section for more details on how to control exactly what happens when SlowDown() is called.
+
+## Parallel Crawler Engine
+A crawler instance can crawl a single site quickly. However, if you have to crawl 10,000 sites quickly you need the ParallelCrawlerEngine. It allows you to crawl a configurable number of sites concurrently to maximize throughput.
+
+### Example Usage
+The concurrency is configurable by setting the maxConcurrentSiteCrawls in the config. The default value is 3 so the following block of code will crawl three sites simultaneously.
+```c#
+static void Main(string[] args)
+{
+    var siteToCrawlProvider = new SiteToCrawlProvider();
+    siteToCrawlProvider.AddSitesToCrawl(new List<SiteToCrawl>
+    {
+        new SiteToCrawl{ Uri = new Uri("http://somesitetocrawl1.com/") },
+        new SiteToCrawl{ Uri = new Uri("http://somesitetocrawl2.com/") },
+        new SiteToCrawl{ Uri = new Uri("http://somesitetocrawl3.com/") },
+    });
+
+    //Create the crawl engine instance
+    var impls = new ParallelImplementationOverride(
+        config,
+        new ParallelImplementationContainer
+        {
+            SiteToCrawlProvider = siteToCrawlProvider
+            WebCrawlerFactory = yourWebCrawlerFactory //YOU NEED TO IMPLEMENT THIS!!!!
+        }
+    );
+
+    var crawlEngine = new ParallelCrawlerEngine(config, impls);
+
+    //Register for site level events
+    crawlEngine.AllCrawlsCompleted += (sender, eventArgs) =>
+    {
+        Console.WriteLine("Completed crawling all sites");
+    };
+    crawlEngine.SiteCrawlCompleted += (sender, eventArgs) =>
+    {
+        Console.WriteLine("Completed crawling site {0}", eventArgs.CrawledSite.SiteToCrawl.Uri);       
+    };
+    crawlEngine.CrawlerInstanceCreated += (sender, eventArgs) =>
+    {
+        //Register for crawler level events. These are Abot's events!!!
+        eventArgs.Crawler.PageCrawlCompleted += (abotSender, abotEventArgs) =>
+        {
+            Console.WriteLine("You have the crawled page here in abotEventArgs.CrawledPage...");
+        };
+    };
+
+    crawlEngine.StartAsync();
+
+    Console.WriteLine("Press enter key to stop");
+    Console.Read();
+}
+```
+### Easy Override Of Default Implementations
+ParallelCrawlerEngine allows easy override of one or all of it's dependent implementations. Below is an example of how you would plugin your own implementations (same as above). The new ParallelImplementationOverride class makes plugging in nested dependencies much easier than it use to be. It will handle finding exactly where that implementation is needed.
+
+```c#
+var impls = new ParallelImplementationOverride(config, new ImplementationContainer {
+    SiteToCrawlProvider = yourSiteToCrawlProvider,
+    WebCrawlerFactory = yourFactory,
+        ...(Excluded)
+});
+
+var crawlEngine = new ParallelCrawlerEngine(config, impls);
+```
+
+### Pause And Resume
+Pause and resume on the ParallelCrawlerEngine simply relays the command to each active CrawlerX instance. However, just be aware that any in progress http requests will be finished, processed and any events related to those will be fired.
+
+```c#
+crawlEngine.StartAsync();
+
+System.Threading.Thread.Sleep(3000);
+crawlEngine.Pause();
+System.Threading.Thread.Sleep(10000);
+crawlEngine.Resume();
+```
+
+### Stop
+Stopping the crawl is as simple as calling Stop(). The call to Stop() tells AbotX to not make any new http requests but to finish any that are in progress. Any events and processing of the in progress requests will finish before each CrawlerX instance stops its crawl as well.
+
+```c#
+crawlEngine.StartAsync();
+
+System.Threading.Thread.Sleep(3000);
+crawlEngine.Stop();
+```
+
+By passing true to the Stop() method, it will stop each CrawlerX instance more abruptly. Anything in pogress will be aborted.
+
+```c#
+crawlEngine.Stop(true);
+```
+
+### Speed Up
+The ParallelCrawlerEngine can be "sped up" by calling the SpeedUp() method. The call to SpeedUp() tells AbotX to increase the number of concurrent site crawls that are currently running. You can can call this method as many times as you like. Adjustments are made instantly so you should see more concurrency immediately.
+
+```c#
+crawlEngine.StartAsync();
+
+System.Threading.Thread.Sleep(3000);
+crawlEngine.SpeedUp();
+
+System.Threading.Thread.Sleep(3000);
+crawlEngine.SpeedUp();
+```
+
+See the "Configure Speed Up And Slow Down" section for more details on how to control exactly what happens when SpeedUp() is called.
+
+### Slow Down
+The ParallelCrawlerEngine can be "slowed down" by calling the SlowDown() method. The call to SlowDown() tells AbotX to reduce the number of concurrent site crawls that are currently running. You can can call this method as many times as you like. Any currently executing crawls will finish normally before any adjustments are made.
+
+```c#
+crawlEngine.StartAsync();
+
+System.Threading.Thread.Sleep(3000);
+crawlEngine.SlowDown();
+
+System.Threading.Thread.Sleep(3000);
+crawlEngine.SlowDown();
+```
+
+See the "Configure Speed Up And Slow Down" section for more details on how to control exactly what happens when SlowDown() is called.
+
+
 
 ## Configure Speed Up And Slow Down
-Multiple features trigger AbotX to speed up or to slow down crawling. The Accelerator and Decelerator are two indipendently configurable components. The default works fine for most cases but the following are options you have to take further control.
+Multiple features trigger AbotX to speed up or to slow down crawling. The Accelerator and Decelerator are two indipendently configurable components that determine exactly how agressively AbotX reacts to a situation that triggers a SpeedUp or SlowDown. The default works fine for most cases but the following are options you have to take further control.
 
 ### Accelerator
 
@@ -379,15 +505,13 @@ config.Accelerator.ConcurrentRequestMax	| The maximum amount of concurrent http 
 
 Name | Description | Used By
 --- | --- | ---
-config.Decelerator.ConcurrentSiteCrawlsDecrement |	The number to decrement the MaxConcurrentSiteCrawls for each call the the SlowDown() method. This deals with site crawl concurrency, NOT the number of concurrent http requests to a single site crawl.	ParallelCrawlerEngine
+config.Decelerator.ConcurrentSiteCrawlsDecrement |	The number to decrement the MaxConcurrentSiteCrawls for each call the the SlowDown() method. This deals with site crawl concurrency, NOT the number of concurrent http requests to a single site crawl.	| ParallelCrawlerEngine
 config.Decelerator.ConcurrentRequestDecrement	| The number to decrement the MaxConcurrentThreads for each call the the SlowDown() method. This deals with the number of concurrent http requests for a single crawl. |	CrawlerX
 config.Decelerator.DelayIncrementInMilliseconds |	If there is a configured (manual or programatically determined) delay in between requests to a site, this is the amount of milliseconds to add to that configured value on every call to the SlowDown() method	CrawlerX
 config.Decelerator.MaxDelayInMilliseconds	| The maximum value the delay can be.	| CrawlerX
 config.Decelerator.ConcurrentSiteCrawlsMin |	The minimum amount of concurrent site crawls to allow no matter how many calls to the SlowDown() method.	| ParallelCrawlerEngine
 config.Decelerator.ConcurrentRequestMin |	The minimum amount of concurrent http requests to a single site no matter how many calls to the SlowDown() method.	| CrawlerX
 
-
-#### Parallel Crawler Engine
 
 #### Javascript Rendering
 
