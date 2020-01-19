@@ -14,16 +14,20 @@ A powerful C# web crawler that makes advanced crawling features easy to use. Abo
 * Version 2.x targets .NET Standard 2.0 (compatible with .NET framework 4.6.1+ or .NET Core 2+)
 * Version 1.x targets .NET Framework 4.0 (support ends soon, please upgrade)
 
+## Installing AbotX
+  * Install AbotX using [Nuget](https://www.nuget.org/packages/Abotx/)
+  
+```command
+PM> Install-Package AbotX
+```
+
 ## Quick Start 
 
 AbotX adds advanced functionality, shortcuts and configurations to the rock solid [Abot C# Web Crawler](https://github.com/sjdirect/abot). It is recommended that you start with Abot's documentation and quick start before coming here. 
 
 AbotX consists of the two main entry points. They are CrawlerX and ParallelCrawlerEngine. CrawlerX is a single crawler instance (child of Abot's PoliteWebCrawler class) while ParallelCrawlerEngine creates and manages multiple instances of CrawlerX. If you want to just crawl a single site then CrawlerX is where you want to start. If you want to crawl a configurable number of sites concurrently within the same process then the ParallelCrawlerEngine is what you are after. 
 
-###### Installing AbotX
-  * Install AbotX using [Nuget](https://www.nuget.org/packages/Abotx/)
-
-###### Using AbotX
+#### Using AbotX
 ```c#
 using System;
 using System.Collections.Generic;
@@ -223,7 +227,146 @@ namespace AbotX2.Demo
 }
 
 ```
+## CrawlerX
+CrawlerX is an object that represents an individual crawler that crawls a single site at a time. It is a subclass of Abot's PoliteWebCrawler and adds some useful functionality.
 
+### Example Usage
+Create an instance and register for events...
+```c#
+var crawler = new CrawlerX();
+crawler.PageCrawlStarting += crawler_ProcessPageCrawlStarting;
+crawler.PageCrawlCompleted += crawler_ProcessPageCrawlCompleted;
+crawler.PageCrawlDisallowed += crawler_PageCrawlDisallowed;
+crawler.PageLinksCrawlDisallowed += crawler_PageLinksCrawlDisallowed;
+```
+Working with some common events...
+```c#
+void crawler_ProcessPageCrawlStarting(object sender, PageCrawlStartingArgs e)
+{
+    PageToCrawl pageToCrawl = e.PageToCrawl;
+    Console.WriteLine("About to crawl link {0} which was found on page {1}", pageToCrawl.Uri.AbsoluteUri,   pageToCrawl.ParentUri.AbsoluteUri);
+}
+
+void crawler_ProcessPageCrawlCompleted(object sender, PageCrawlCompletedArgs e)
+{
+    CrawledPage crawledPage = e.CrawledPage;
+
+    if (crawledPage.WebException != null || crawledPage.HttpWebResponse.StatusCode != HttpStatusCode.OK)
+        Console.WriteLine("Crawl of page failed {0}", crawledPage.Uri.AbsoluteUri);
+    else
+        Console.WriteLine("Crawl of page succeeded {0}", crawledPage.Uri.AbsoluteUri);
+
+    if (string.IsNullOrEmpty(crawledPage.Content.Text))
+        Console.WriteLine("Page had no content {0}", crawledPage.Uri.AbsoluteUri);
+}
+
+void crawler_PageLinksCrawlDisallowed(object sender, PageLinksCrawlDisallowedArgs e)
+{
+    CrawledPage crawledPage = e.CrawledPage;
+    Console.WriteLine("Did not crawl the links on page {0} due to {1}", crawledPage.Uri.AbsoluteUri, e.DisallowedReason);
+}
+
+void crawler_PageCrawlDisallowed(object sender, PageCrawlDisallowedArgs e)
+{
+    PageToCrawl pageToCrawl = e.PageToCrawl;
+    Console.WriteLine("Did not crawl page {0} due to {1}", pageToCrawl.Uri.AbsoluteUri, e.DisallowedReason);
+}
+```
+Run the crawl synchronously
+```c#
+var result = crawler.Crawl(new Uri("YourSiteHere"));
+```
+Run the crawl asynchronously
+```c#
+var result = await crawler.CrawlAsync(new Uri("YourSiteHere"));
+```
+### Easy Override
+CrawlerX has default implementations for all its dependencies. However, there are times where you may want to override one or all of those implementations. Below is an example of how you would plugin your own implementations. The new ImplementationOverride class makes plugging in nested dependencies much easier than it use to be with Abot. It will handle finding exactly where that implementation is needed.
+
+```c#
+var impls = new ImplementationOverride(config, ImplementationContainer {
+    HyperlinkParser = new YourImpl1(),
+    PageRequester = new YourImpl2()
+});
+
+var crawler = new CrawlerX(config, impls);
+```
+### Pause And Resume
+Pause and resume work as you would expect. However, just be aware that any in progress http requests will be finished, processed and any events related to those will be fired.
+```c#
+var crawler = new CrawlerX();
+
+crawler.PageCrawlCompleted += (sender, args) =>
+{
+    //You will be interested in args.CrawledPage & args.CrawlContext
+};
+
+var crawlerTask = crawler.CrawlAsync(new Uri("http://blahblahblah.com"));
+
+System.Threading.Thread.Sleep(3000);
+crawler.Pause();
+System.Threading.Thread.Sleep(10000);
+crawler.Resume();
+
+var result = crawlerTask.Result;
+```
+
+### Stop
+Stopping the crawl is as simple as calling Stop(). The call to Stop() tells AbotX to not make any new http requests but to finish any that are in progress. Any events and processing of the in progress requests will finish before CrawlerX stops the crawl.
+```c#
+var crawler = new CrawlerX();
+
+crawler.PageCrawlCompleted += (sender, args) =>
+{
+    //You will be interested in args.CrawledPage & args.CrawlContext
+};
+
+var crawlerTask = crawler.CrawlAsync(new Uri("http://blahblahblah.com"));
+
+System.Threading.Thread.Sleep(3000);
+crawler.Stop();
+var result = crawlerTask.Result;
+```
+By passing true to the Stop() method, AbotX will stop the crawl more abruptly. Anything in pogress will be aborted.
+```c#
+crawler.Stop(true);
+```
+### Speed Up
+CrawlerX can be "sped up" by calling the SpeedUp() method. The call to SpeedUp() tells AbotX to increase the number of concurrent http requests to the currently running sites. You can can call this method as many times as you like. Adjustments are made instantly so you should see more concurrency immediately.
+
+```c#
+crawler.CrawlAsync(new Uri("http://localhost:1111/"));
+
+System.Threading.Thread.Sleep(3000);
+crawler.SpeedUp();
+
+System.Threading.Thread.Sleep(3000);
+crawler.SpeedUp();
+```
+
+Configure how agressively to speed up...
+Name | Description | Used By
+--- | --- | ---
+config.Accelerator.ConcurrentSiteCrawlsIncrement | The number to increment the MaxConcurrentSiteCrawls for each call the the SpeedUp() method. This deals with site crawl concurrency, NOT the number of concurrent http requests to a single site crawl. | ParallelCrawlerEngine
+config.Accelerator.ConcurrentRequestIncrement	| The number to increment the MaxConcurrentThreads for each call the the SpeedUp() method. This deals with the number of concurrent http requests for a single crawl. |	CrawlerX
+config.Accelerator.DelayDecrementInMilliseconds	| If there is a configured (manual or programatically determined) delay in between requests to a site, this is the amount of milliseconds to remove from that configured value on every call to the SpeedUp() method.	| CrawlerX
+config.Accelerator.MinDelayInMilliseconds |	If there is a configured (manual or programatically determined) delay in between requests to a site, this is the minimum amount of milliseconds to delay no matter how many calls to the SpeedUp() method. |	CrawlerX
+config.Accelerator.ConcurrentSiteCrawlsMax	| The maximum amount of concurrent site crawls to allow no matter how many calls to the SpeedUp() method.	| ParallelCrawlerEngine
+config.Accelerator.ConcurrentRequestMax	| The maximum amount of concurrent http requests to a single site no matter how many calls to the SpeedUp() method.	| CrawlerX
+
+
+#### Parallel Crawler Engine
+
+#### Javascript Rendering
+
+#### Auto Throttling
+
+#### Auto Tuning
+
+## Paid License
+All plans except AbotX Basic require a [paid license](https://abotx.org/Buy/Pricing) after the 30 day trial. After the purchase you will receive an AbotX.lic file. This file must reside in the same directory as the AbotX.dll file during execution.
+
+Please remember that your AbotX.lic file should not be shared outside the organization that purchased the license. This especially means not sharing it in online forums, blogs or packaging it in other software packages that are distributed to end users. Please contact us directly for redistribution requests.
 <br /><br /><br />
 <hr />
 
