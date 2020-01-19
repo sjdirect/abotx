@@ -1,4 +1,4 @@
-# AbotX [![NuGet](https://img.shields.io/nuget/v/Abotx.svg)](https://www.nuget.org/packages/Abotx/)
+# AbotX [![Build Status](https://dev.azure.com/sjdirect0945/AbotX/_apis/build/status/AbotX%20CI?branchName=master)](https://dev.azure.com/sjdirect0945/AbotX/_build/latest?definitionId=1&branchName=master) [![NuGet](https://img.shields.io/nuget/v/Abotx.svg)](https://www.nuget.org/packages/Abotx/)
 
 A powerful C# web crawler that makes advanced crawling features easy to use. AbotX builds upon the [open source Abot C# Web Crawler](https://github.com/sjdirect/abot) by providing a powerful set of wrappers and extensions. 
 
