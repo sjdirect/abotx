@@ -211,7 +211,7 @@ namespace AbotX2.Demo
         {
             /*The following settings will help not get your ip banned
              by the sites you are trying to crawl. The idea is to crawl
-             only 5 pages and wait 2 seconds between http requests
+             only 10 pages and wait 2 seconds between http requests
              */
             return new CrawlConfigurationX
             {
