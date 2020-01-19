@@ -10,6 +10,8 @@ A powerful C# web crawler that makes advanced crawling features easy to use. Abo
 * Avoid getting blocked by sites
 * Automatically tune speed/concurrency
 
+AbotX has both free and paid features. See licensing info at the bottom of this page for more information.
+
 ##### Technical Details
 * Version 2.x targets .NET Standard 2.0 (compatible with .NET framework 4.6.1+ or .NET Core 2+)
 * Version 1.x targets .NET Framework 4.0 (support ends soon, please upgrade)
@@ -343,8 +345,27 @@ crawler.SpeedUp();
 System.Threading.Thread.Sleep(3000);
 crawler.SpeedUp();
 ```
+See the "Configure Speed Up And Slow Down" section for more details on what happens when SpeedUp() is called.
 
-Configure how agressively to speed up...
+### Slow Down
+
+CrawlerX can be "slowed down" by calling the SlowDown() method. The call to SlowDown() tells AbotX to reduce the number of concurrent http requests to the currently runnning sites. You can can call this method as many times as you like. Any currently executing http requests will finish normally before any adjustments are made.
+
+```c#
+crawler.CrawlAsync(new Uri("http://localhost:1111/"));
+
+System.Threading.Thread.Sleep(3000);
+crawler.SlowDown();
+
+System.Threading.Thread.Sleep(3000);
+crawler.SlowDown();
+```
+
+## Configure Speed Up And Slow Down
+Multiple features trigger AbotX to speed up or to slow down crawling. The Accelerator and Decelerator are two indipendently configurable components. The default works fine for most cases but the following are options you have to take further control.
+
+### Accelerator
+
 Name | Description | Used By
 --- | --- | ---
 config.Accelerator.ConcurrentSiteCrawlsIncrement | The number to increment the MaxConcurrentSiteCrawls for each call the the SpeedUp() method. This deals with site crawl concurrency, NOT the number of concurrent http requests to a single site crawl. | ParallelCrawlerEngine
@@ -353,6 +374,17 @@ config.Accelerator.DelayDecrementInMilliseconds	| If there is a configured (manu
 config.Accelerator.MinDelayInMilliseconds |	If there is a configured (manual or programatically determined) delay in between requests to a site, this is the minimum amount of milliseconds to delay no matter how many calls to the SpeedUp() method. |	CrawlerX
 config.Accelerator.ConcurrentSiteCrawlsMax	| The maximum amount of concurrent site crawls to allow no matter how many calls to the SpeedUp() method.	| ParallelCrawlerEngine
 config.Accelerator.ConcurrentRequestMax	| The maximum amount of concurrent http requests to a single site no matter how many calls to the SpeedUp() method.	| CrawlerX
+
+### Decelerator
+
+Name | Description | Used By
+--- | --- | ---
+config.Decelerator.ConcurrentSiteCrawlsDecrement |	The number to decrement the MaxConcurrentSiteCrawls for each call the the SlowDown() method. This deals with site crawl concurrency, NOT the number of concurrent http requests to a single site crawl.	ParallelCrawlerEngine
+config.Decelerator.ConcurrentRequestDecrement	| The number to decrement the MaxConcurrentThreads for each call the the SlowDown() method. This deals with the number of concurrent http requests for a single crawl. |	CrawlerX
+config.Decelerator.DelayIncrementInMilliseconds |	If there is a configured (manual or programatically determined) delay in between requests to a site, this is the amount of milliseconds to add to that configured value on every call to the SlowDown() method	CrawlerX
+config.Decelerator.MaxDelayInMilliseconds	| The maximum value the delay can be.	| CrawlerX
+config.Decelerator.ConcurrentSiteCrawlsMin |	The minimum amount of concurrent site crawls to allow no matter how many calls to the SlowDown() method.	| ParallelCrawlerEngine
+config.Decelerator.ConcurrentRequestMin |	The minimum amount of concurrent http requests to a single site no matter how many calls to the SlowDown() method.	| CrawlerX
 
 
 #### Parallel Crawler Engine
