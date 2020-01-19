@@ -29,7 +29,7 @@ AbotX adds advanced functionality, shortcuts and configurations to the rock soli
 
 AbotX consists of the two main entry points. They are CrawlerX and ParallelCrawlerEngine. CrawlerX is a single crawler instance (child of Abot's PoliteWebCrawler class) while ParallelCrawlerEngine creates and manages multiple instances of CrawlerX. If you want to just crawl a single site then CrawlerX is where you want to start. If you want to crawl a configurable number of sites concurrently within the same process then the ParallelCrawlerEngine is what you are after. 
 
-### Using AbotX
+#### Using AbotX
 ```c#
 using System;
 using System.Collections.Generic;
@@ -232,7 +232,7 @@ namespace AbotX2.Demo
 ## CrawlerX
 CrawlerX is an object that represents an individual crawler that crawls a single site at a time. It is a subclass of Abot's PoliteWebCrawler and adds some useful functionality.
 
-### Example Usage
+#### Example Usage
 Create an instance and register for events...
 ```c#
 var crawler = new CrawlerX();
@@ -282,7 +282,7 @@ Run the crawl asynchronously
 ```c#
 var result = await crawler.CrawlAsync(new Uri("YourSiteHere"));
 ```
-### Easy Override
+#### Easy Override
 CrawlerX has default implementations for all its dependencies. However, there are times where you may want to override one or all of those implementations. Below is an example of how you would plugin your own implementations. The new ImplementationOverride class makes plugging in nested dependencies much easier than it use to be with Abot. It will handle finding exactly where that implementation is needed.
 
 ```c#
@@ -293,7 +293,7 @@ var impls = new ImplementationOverride(config, ImplementationContainer {
 
 var crawler = new CrawlerX(config, impls);
 ```
-### Pause And Resume
+#### Pause And Resume
 Pause and resume work as you would expect. However, just be aware that any in progress http requests will be finished, processed and any events related to those will be fired.
 ```c#
 var crawler = new CrawlerX();
@@ -313,7 +313,7 @@ crawler.Resume();
 var result = crawlerTask.Result;
 ```
 
-### Stop
+#### Stop
 Stopping the crawl is as simple as calling Stop(). The call to Stop() tells AbotX to not make any new http requests but to finish any that are in progress. Any events and processing of the in progress requests will finish before CrawlerX stops the crawl.
 ```c#
 var crawler = new CrawlerX();
@@ -333,7 +333,7 @@ By passing true to the Stop() method, AbotX will stop the crawl more abruptly. A
 ```c#
 crawler.Stop(true);
 ```
-### Speed Up
+#### Speed Up
 CrawlerX can be "sped up" by calling the SpeedUp() method. The call to SpeedUp() tells AbotX to increase the number of concurrent http requests to the currently running sites. You can can call this method as many times as you like. Adjustments are made instantly so you should see more concurrency immediately.
 
 ```c#
@@ -347,7 +347,7 @@ crawler.SpeedUp();
 ```
 See the "Configure Speed Up And Slow Down" section for more details on how to control exactly what happens when SpeedUp() is called.
 
-### Slow Down
+#### Slow Down
 
 CrawlerX can be "slowed down" by calling the SlowDown() method. The call to SlowDown() tells AbotX to reduce the number of concurrent http requests to the currently runnning sites. You can can call this method as many times as you like. Any currently executing http requests will finish normally before any adjustments are made.
 
@@ -365,7 +365,7 @@ See the "Configure Speed Up And Slow Down" section for more details on how to co
 ## Parallel Crawler Engine
 A crawler instance can crawl a single site quickly. However, if you have to crawl 10,000 sites quickly you need the ParallelCrawlerEngine. It allows you to crawl a configurable number of sites concurrently to maximize throughput.
 
-### Example Usage
+#### Example Usage
 The concurrency is configurable by setting the maxConcurrentSiteCrawls in the config. The default value is 3 so the following block of code will crawl three sites simultaneously.
 ```c#
 static void Main(string[] args)
@@ -414,7 +414,7 @@ static void Main(string[] args)
     Console.Read();
 }
 ```
-### Easy Override Of Default Implementations
+#### Easy Override Of Default Implementations
 ParallelCrawlerEngine allows easy override of one or all of it's dependent implementations. Below is an example of how you would plugin your own implementations (same as above). The new ParallelImplementationOverride class makes plugging in nested dependencies much easier than it use to be. It will handle finding exactly where that implementation is needed.
 
 ```c#
@@ -427,7 +427,7 @@ var impls = new ParallelImplementationOverride(config, new ImplementationContain
 var crawlEngine = new ParallelCrawlerEngine(config, impls);
 ```
 
-### Pause And Resume
+#### Pause And Resume
 Pause and resume on the ParallelCrawlerEngine simply relays the command to each active CrawlerX instance. However, just be aware that any in progress http requests will be finished, processed and any events related to those will be fired.
 
 ```c#
@@ -439,7 +439,7 @@ System.Threading.Thread.Sleep(10000);
 crawlEngine.Resume();
 ```
 
-### Stop
+#### Stop
 Stopping the crawl is as simple as calling Stop(). The call to Stop() tells AbotX to not make any new http requests but to finish any that are in progress. Any events and processing of the in progress requests will finish before each CrawlerX instance stops its crawl as well.
 
 ```c#
@@ -455,7 +455,7 @@ By passing true to the Stop() method, it will stop each CrawlerX instance more a
 crawlEngine.Stop(true);
 ```
 
-### Speed Up
+#### Speed Up
 The ParallelCrawlerEngine can be "sped up" by calling the SpeedUp() method. The call to SpeedUp() tells AbotX to increase the number of concurrent site crawls that are currently running. You can can call this method as many times as you like. Adjustments are made instantly so you should see more concurrency immediately.
 
 ```c#
@@ -470,7 +470,7 @@ crawlEngine.SpeedUp();
 
 See the "Configure Speed Up And Slow Down" section for more details on how to control exactly what happens when SpeedUp() is called.
 
-### Slow Down
+#### Slow Down
 The ParallelCrawlerEngine can be "slowed down" by calling the SlowDown() method. The call to SlowDown() tells AbotX to reduce the number of concurrent site crawls that are currently running. You can can call this method as many times as you like. Any currently executing crawls will finish normally before any adjustments are made.
 
 ```c#
@@ -490,7 +490,7 @@ See the "Configure Speed Up And Slow Down" section for more details on how to co
 ## Configure Speed Up And Slow Down
 Multiple features trigger AbotX to speed up or to slow down crawling. The Accelerator and Decelerator are two indipendently configurable components that determine exactly how agressively AbotX reacts to a situation that triggers a SpeedUp or SlowDown. The default works fine for most cases but the following are options you have to take further control.
 
-### Accelerator
+#### Accelerator
 
 Name | Description | Used By
 --- | --- | ---
@@ -501,7 +501,7 @@ config.Accelerator.MinDelayInMilliseconds |	If there is a configured (manual or 
 config.Accelerator.ConcurrentSiteCrawlsMax	| The maximum amount of concurrent site crawls to allow no matter how many calls to the SpeedUp() method.	| ParallelCrawlerEngine
 config.Accelerator.ConcurrentRequestMax	| The maximum amount of concurrent http requests to a single site no matter how many calls to the SpeedUp() method.	| CrawlerX
 
-### Decelerator
+#### Decelerator
 
 Name | Description | Used By
 --- | --- | ---
@@ -513,11 +513,148 @@ config.Decelerator.ConcurrentSiteCrawlsMin |	The minimum amount of concurrent si
 config.Decelerator.ConcurrentRequestMin |	The minimum amount of concurrent http requests to a single site no matter how many calls to the SlowDown() method.	| CrawlerX
 
 
-#### Javascript Rendering
+## Javascript Rendering
+Many web pages on the internet today use javascript to create the final page rendering. Most web crawlers do not render the javascript but instead just process the raw html sent back by the server. Use this feature to render javascript before processing.
 
-#### Auto Throttling
+#### Additional Installation Step
+If you plan to use Javascript rendering there is an additional step for the time being. Unfortunately, NUGET has proven to be a train wreck as .NET has advanced (.NET Core vs Standard, PackageReference vs Packages.config, dotnet pack vs nuget pack, etc..). This has caused some packages that AbotX depends on no longer install correctly. Specifically the PhatomJS package no longer adds the phantomjs.exe file to your project and marks it for output to the bin directory.
 
-#### Auto Tuning
+The workaround is to manually add this file to your project, set it as "Content" and "Copy If Newer". This will make sure the phantom.exe file is in the bin when AbotX needs it. This package is already referenced by AbotX so you will have a copy of this file at "[YourNugetPackagesLocationAbsolutePath]\PhantomJS.2.1.1\tools\phantomjs". Another option would be to tell AbotX where to look for the file by using the CrawlConfigurationX.JavascriptRendererPath config value. This path is of the DIRECTORY that contains the phantomjs.exe file.
+
+#### Performance Considerations
+Rendering javascript is a much slower operation than just requesting the page source. The browser has to make the initial request to the web server for the page source. Then it must request, wait for and load all the external resources. Care must be taken in how you configure AbotX when this feature is enabled. A modern machine with an intel I7 processor and 8+ gigs of ram could crawl 30-50 sites concurrently and each of those crawls spawning 10+ threads each. However if javascript rendering is enabled that same configuration would overwhelm the host machine
+
+#### Safe Configuration
+The following is an example how to configure Abot/AbotX to run with javascript rendering enabled for a modern host machine that has an Intel I7 processor and at least 16GB of ram. If it has 4 cores and 8 logical processors, it should be able to handle this configuration under normal circumstances.
+
+```c#
+var config = new CrawlConfigurationX
+{
+    IsJavascriptRenderingEnabled = true,
+    JavascriptRenderingWaitTimeInMilliseconds = 3000, //How long to wait for js to process 
+    MaxConcurrentSiteCrawls = 1,                      //Only crawl a single site at a time
+    MaxConcurrentThreads = 8,                         //Logical processor count to avoid cpu thrashing
+};
+var crawler = new CrawlerX(config);
+
+//Add optional decision whether javascript should be rendered
+crawler.ShouldRenderPageJavascript((crawledPage, crawlContext) =>
+{
+    if(crawledPage.Uri.AbsoluteUri.Contains("ghost"))
+        return new CrawlDecision {Allow = false, Reason = "scared to render ghost javascript"};
+
+    return new CrawlDecision { Allow = true };
+}); //You can implement IDecisionMakerX interface for even more control
+var crawlerTask = crawler.CrawlAsync(new Uri("http://blahblahblah.com"));
+```
+
+## Auto Throttling
+Most websites you crawl cannot or will not handle the load of a web crawler. Auto Throttling automatically slows down the crawl speed if the website being crawled is showing signs of stress or unwillingness to respond to the frequency of http requests.
+
+#### Example Usage
+```c#
+var config = new CrawlConfigurationX
+{
+    AutoThrottling = new AutoThrottlingConfig
+    {
+        IsEnabled = true,
+        ThresholdHigh = 10,                 //default
+        ThresholdMed = 5,                   //default
+        ThresholdTimeInMilliseconds = 5000, //default
+        MinAdjustmentWaitTimeInSecs = 30    //default
+    },
+    Decelerator = new DeceleratorConfig
+    {
+        ConcurrentSiteCrawlsDecrement = 2,      //default
+        ConcurrentRequestDecrement = 2,         //default
+        DelayIncrementInMilliseconds = 2000,    //default
+        MaxDelayInMilliseconds = 15000,         //default
+        ConcurrentSiteCrawlsMin = 1,            //default
+        ConcurrentRequestMin = 1                //default
+    },
+    MaxRetryCount = 3,
+};
+```
+
+Using CrawlerX (single instance of a crawler)
+```c#
+var crawler = new CrawlerX(config);
+crawler.CrawlAsync(new Uri(url));
+```
+
+Using ParallelCrawlerEngine (multiple instances of crawlers)
+```c#
+var crawlEngine = new ParallelCrawlerEngine(config);
+```
+
+Configure the sensitivity to what will trigger throttling
+
+Name |	Description	| Used By
+--- | --- |
+config.AutoThrottling.IsEnabled |	Whether to enable the AutoThrottling feature |	CrawlerX
+config.AutoThrottling.ThresholdHigh	| The number of "stressed" requests before considering a crawl as under high stress |	CrawlerX
+config.AutoThrottling.ThresholdMed |	The number of "stressed" requests before considering a crawl as under medium stress	| CrawlerX
+config.AutoThrottling.ThresholdTimeInMilliseconds |	The number of elapsed milliseconds in response time that would consider the response "stressed" |	CrawlerX
+config.AutoThrottling.MinAdjustmentWaitTimeInSecs	| The minimum number of seconds since the last throttled request to wait before attempting to check/adjust throttling again. We want to give the last adjustment a chance to work before adjusting again.	| CrawlerX
+
+See the "Configure Speed Up And Slow Down" section for more details on how to control exactly what happens during AutoThrottling in regards to slowing down the crawl (Decelerator).
+
+## Auto Tuning
+Its difficult to predict what your machine can handle when the sites you will crawl/process all require different levels of machine resources. Auto tuning automatically monitors the host machine's resource usage and adjusts the crawl speed and concurrency to maximize throughput without overrunning it.
+
+#### Example Usage
+```c#
+var config = new CrawlConfigurationX
+{
+    AutoTuning = new AutoTuningConfig
+    {
+        IsEnabled = true,
+        CpuThresholdHigh = 85,              //default
+        CpuThresholdMed = 65,               //default
+        MinAdjustmentWaitTimeInSecs = 30    //default
+    },
+    Accelerator = new AcceleratorConfig
+    {
+        ConcurrentSiteCrawlsIncrement = 2,      //default
+        ConcurrentRequestIncrement = 2,         //default
+        DelayDecrementInMilliseconds = 2000,    //default
+        MinDelayInMilliseconds = 0,             //default
+        ConcurrentSiteCrawlsMax = config.MaxConcurrentSiteCrawls,   //default is 0
+        ConcurrentRequestMax = config.MaxConcurrentThreads          //default is 0
+    },
+    Decelerator = new DeceleratorConfig
+    {
+        ConcurrentSiteCrawlsDecrement = 2,      //default
+        ConcurrentRequestDecrement = 2,         //default
+        DelayIncrementInMilliseconds = 2000,    //default
+        MaxDelayInMilliseconds = 15000,         //default
+        ConcurrentSiteCrawlsMin = 1,            //default
+        ConcurrentRequestMin = 1                //default
+    },
+    MaxRetryCount = 3,
+};
+```
+Using CrawlerX (single instance of a crawler)
+```c#
+var crawler = new CrawlerX(config);
+crawler.CrawlAsync(new Uri(url));
+```
+
+Using ParallelCrawlerEngine (multiple instances of crawlers)
+```c#
+var crawlEngine = new ParallelCrawlerEngine(config);
+```
+
+Configure the sensitivity to what will trigger tuning
+
+Name |	Description |	Used By
+--- | --- | ---
+config.AutoTuning.IsEnabled |	Whether to enable the AutoTuning feature	| CrawlerX & ParallelCrawlerEngine
+config.AutoTuning.CpuThresholdHigh |	The avg cpu percentage before considering a host as under high stress |	CrawlerX & ParallelCrawlerEngine
+config.AutoTuning.CpuThresholdMed	| The avg cpu percentage before considering a host as under medium stress	| CrawlerX & ParallelCrawlerEngine
+config.AutoTuning.MinAdjustmentWaitTimeInSecs |	The minimum number of seconds since the last tuned action to wait before attempting to check/adjust tuning again. We want to give the last adjustment a chance to work before adjusting again.	| CrawlerX & ParallelCrawlerEngine
+
+See the "Configure Speed Up And Slow Down" section for more details on how to control exactly what happens during AutoTuning in regards to speeding up and slowing down the crawl (Accelerator & Decelerator).
 
 ## Paid License
 All plans except AbotX Basic require a [paid license](https://abotx.org/Buy/Pricing) after the 30 day trial. After the purchase you will receive an AbotX.lic file. This file must reside in the same directory as the AbotX.dll file during execution.
