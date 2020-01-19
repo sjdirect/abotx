@@ -8,7 +8,7 @@ A powerful C# web crawler that makes advanced crawling features easy to use. Abo
 * Go to the [AbotX website](https://abotx.org) for more information and tutorials
 
 ### Release Notes ###
-  * [v2.1.41](https://www.nuget.org/packages/AbotX/2.1.41) released 2020-01-18
+  * [v2.1.1](https://www.nuget.org/packages/AbotX/2.1.1) released 2020-01-18
     * Now targeting .NET Standard 2.0 
   * [v1.3.73](https://www.nuget.org/packages/AbotX/1.3.73) released 2018-02-08
     * Added property SiteToCrawl.CrawlConfiguration to allow easy per crawl configuration. WebCrawlerFactory will use this property if present
