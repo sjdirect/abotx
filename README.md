@@ -17,7 +17,7 @@ AbotX has both free and paid features. See licensing info at the bottom of this 
 * Version 1.x targets .NET Framework 4.0 (support ends soon, please upgrade)
 
 ## Installing AbotX
-  * Install AbotX using [Nuget](https://www.nuget.org/packages/Abotx/)
+Install AbotX using [Nuget](https://www.nuget.org/packages/Abotx/)
   
 ```command
 PM> Install-Package AbotX
