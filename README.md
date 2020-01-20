@@ -25,6 +25,8 @@ Install AbotX using [Nuget](https://www.nuget.org/packages/Abotx/)
 PM> Install-Package AbotX
 ```
 
+IF you have an AbotX.lic file. Just make sure it ends up in the bin directory of your application (ie.. in the same directory as the AbotX.dll file). 
+
 ## Quick Start 
 
 AbotX adds advanced functionality, shortcuts and configurations to the rock solid [Abot C# Web Crawler](https://github.com/sjdirect/abot/blob/master/README.md). It is recommended that you start with Abot's documentation and quick start before coming here.  
