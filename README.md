@@ -25,7 +25,7 @@ Install AbotX using [Nuget](https://www.nuget.org/packages/Abotx/)
 PM> Install-Package AbotX
 ```
 
-IF you have an AbotX.lic file. Just make sure it ends up in the bin directory of your application (ie.. in the same directory as the AbotX.dll file). 
+If you have an AbotX.lic file. Just make sure it ends up in the bin directory of your application (ie.. in the same directory as the AbotX.dll file). 
 
 ## Quick Start 
 
