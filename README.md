@@ -181,14 +181,16 @@ namespace AbotX2.Demo
 
             var config = GetSafeConfig();
             config.MaxConcurrentSiteCrawls = 3;
-
+                
             var crawlEngine = new ParallelCrawlerEngine(
                 config, 
-                new ParallelImplementationOverride(config)
-                {
-                    SiteToCrawlProvider = siteToCrawlProvider,
-                    WebCrawlerFactory = new WebCrawlerFactory(config)//Same config will be used for every crawler instance created
-                });
+                new ParallelImplementationOverride(config, 
+                    new ParallelImplementationContainer()
+                    {
+                        SiteToCrawlProvider = siteToCrawlProvider,
+                        WebCrawlerFactory = new WebCrawlerFactory(config)//Same config will be used for every crawler
+                    })
+                );                
             
             var crawlCounts = new Dictionary<Guid, int>();
             var siteStartingEvents = 0;
