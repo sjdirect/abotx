@@ -12,7 +12,7 @@ A powerful C# web crawler that makes advanced crawling features easy to use. Abo
 * Avoid getting blocked by sites (AutoThrottling)
 * Automatically tune speed/concurrency (AutoTuning)
 
-AbotX has both free and paid features. See licensing info at the bottom of this page for more information.
+AbotX use to be a commercial product but is now FREE! Use the AbotX.Lic file in the root of this repository.
 
 ## Technical Details
 * Version 2.x targets .NET Standard 2.0 (compatible with .NET framework 4.6.1+ or .NET Core 2+)
@@ -662,10 +662,6 @@ config.AutoTuning.MinAdjustmentWaitTimeInSecs |	The minimum number of seconds si
 
 See the "Configure Speed Up And Slow Down" section for more details on how to control exactly what happens during AutoTuning in regards to speeding up and slowing down the crawl (Accelerator & Decelerator).
 
-## Paid License
-All plans except AbotX Basic require a [paid license](https://abotx.org/Buy/Pricing) after the 30 day trial. After the purchase you will receive an AbotX.lic file. This file must reside in the same directory as the AbotX.dll file during execution.
-
-Please remember that your AbotX.lic file should not be shared outside the organization that purchased the license. This especially means not sharing it in online forums, blogs or packaging it in other software packages that are distributed to end users. Please contact us directly for redistribution requests.
 <br /><br /><br />
 <hr />
 
